@@ -13,6 +13,25 @@ Graph::Graph(int vSize)
 	}
 }
 
+void Graph::empty()
+{
+	int i;
+    edgeNode *p;
+    for(i=0;i<Vers;++i){
+        while((p=verList[i].head)!=NULL){
+            verList[i].head=p->next;
+            delete p;
+        }
+	}
+	 for(int i=0;i<Vers;++i){
+		verList[i].head=NULL;
+		verList[i].degree = 0;
+	}
+
+}
+
+
+
 Graph::~Graph()
 {
     int i;
@@ -31,6 +50,7 @@ bool Graph::insert(int u,int v,int w)
 	verList[u].head = new edgeNode(v,w,verList[u].head);
 	verList[v].head = new edgeNode(u,w,verList[v].head);
     ++Edges;
+	verList[u].degree++;verList[v].degree++;
     return true;
 }
 
@@ -48,7 +68,8 @@ bool Graph::Removedirected(int u,int v)
     while(p->next!=NULL&&p->next->end!=v)p=p->next;
     if(p->next==NULL)return false;
     q=p->next;p->next=q->next;delete q;
-    --Edges;
+    
+	verList[u].degree--;
     return true;
 }
 
@@ -57,6 +78,7 @@ bool Graph::remove(int u,int v)
 	if(Removedirected(u,v)) Removedirected(v,u);
 	else return false;
 	return true;
+	--Edges;
 }
 
 

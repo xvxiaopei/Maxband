@@ -20,6 +20,7 @@ public:
     bool exist (int u,int v) const;
 	void printVertex(int u);
 	int Vdegree(int u);
+	void empty();
     ~Graph();
 private:
 	bool Removedirected(int u,int v);
