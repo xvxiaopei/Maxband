@@ -81,12 +81,21 @@ bool Graph::remove(int u,int v)
 	--Edges;
 }
 
-
+int Graph::edges() const
+{
+	return Edges;
+}
 bool Graph::exist(int u,int v)const
 {
     edgeNode *p=verList[u].head;
     while(p!=NULL && p->end!=v)p=p->next;
     if(p==NULL)return false;else return true;
+}
+int Graph::edgewidth(int u,int v) const
+{
+	edgeNode *p=verList[u].head;
+    while(p!=NULL && p->end!=v)p=p->next;
+	if(p==NULL)return 0;else return p->weight;
 }
 
 int Graph::Vdegree(int u)
@@ -100,7 +109,7 @@ void Graph::printVertex(int u)
 	cout<<"Vertex "<<u<<" has "<<Vdegree(u)<<" edges :"<<endl;
 	edgeNode *p=verList[u].head;
 	while(p!=NULL){
-		cout<<p->end<<" ";
+		cout<<p->end<<" with width "<<p->weight<<"   ";
 		p=p->next;
 	}
 	cout<<endl;

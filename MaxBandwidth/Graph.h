@@ -18,6 +18,8 @@ public:
     bool insert(int u,int v,int w=1);
     bool remove(int u,int v);
     bool exist (int u,int v) const;
+	int edgewidth(int u,int v) const;
+	int edges() const;
 	void printVertex(int u);
 	int Vdegree(int u);
 	void empty();
