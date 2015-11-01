@@ -7,7 +7,7 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
-
+#include "NodeStructure.h"
 using namespace std;
 
 
@@ -26,27 +26,10 @@ public:
     ~Graph();
 private:
 	bool Removedirected(int u,int v);
-    struct  edgeNode{
-        int end;
-        int weight;
-        edgeNode *next;
-
-        edgeNode(int e,int w,edgeNode *n=NULL)
-        {end=e;weight=w;next=n;}
-
-    };
+    
     int Vers;
     int Edges;
-    struct verNode{
-        int ver;
-		int degree;
-        edgeNode *head;
-
-        verNode(edgeNode *h=NULL)
-        {
-            head =h;
-        }
-    };
+    
     verNode *verList;
 };
 

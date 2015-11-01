@@ -47,8 +47,8 @@ Graph::~Graph()
 bool Graph::insert(int u,int v,int w)
 {
     if(exist(u,v)) return false;
-	verList[u].head = new edgeNode(v,w,verList[u].head);
-	verList[v].head = new edgeNode(u,w,verList[v].head);
+	verList[u].head = new edgeNode(u,v,w,verList[u].head);
+	verList[v].head = new edgeNode(v,u,w,verList[v].head);
     ++Edges;
 	verList[u].degree++;verList[v].degree++;
     return true;

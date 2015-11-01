@@ -1,4 +1,6 @@
 #include "Graph.h"
+#include "Heap.h"
+#include "NodeStructure.h"
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
@@ -25,6 +27,24 @@ int main(){
 	x.printVertex(12);
 	cout<<endl<<x.edgewidth(3,12);
 	cout<<"??"<<endl;
+	Heap<verNode> m(30,true);
+	verNode a,b,c,d;
+	a.degree=20;
+	a.ver=1;
+	m.insert(a,a.degree);
+	b.degree=15;
+	b.ver=2;
+	c.degree=19;
+	c.ver=3;
+	d.degree=31;
+	d.ver=4;
+	m.insert(b,b.degree);
+	m.insert(c,c.degree);
+	m.insert(d,d.degree);
+	m.Delete(0);
+	cout<<m.MaxMin().ver<<"  :"<<m.MaxMin().degree<<endl;
+
+	/*
 	Graph *g1=new Graph(VER);
 	Graph *g2=new Graph(VER);
 	create1(g1);
@@ -45,6 +65,7 @@ int main(){
 		
 	}
 	cout<<"??"<<endl;
+	*/
 	cout<<"??"<<endl;
 
 }
