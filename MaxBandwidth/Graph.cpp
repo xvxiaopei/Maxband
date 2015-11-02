@@ -12,6 +12,83 @@ Graph::Graph(int vSize)
 		verList[i].degree = 0;
 	}
 }
+int Graph::min(int x,int y)
+{
+	return (x<y)?x:y;
+}
+void  Graph::printMaxWidthPath(int s,int t,int * dad)
+{
+	
+	int ind=t;
+	if(dad[t]==-1){cout<<"No such path!"<<endl;return;}
+	while(dad[ind]!=s)
+	{
+		cout<<ind<<" -- ";
+		ind=dad[ind];
+	}
+	cout<<ind<<" -- ";
+	ind=dad[ind];
+	cout<<ind<<endl;
+}
+
+int * Graph::Dij(int s,int t)    
+{
+	int *dad  = new int[Vers];
+	edgeNode *p;
+	enum STATUS{INTREE,FRINGE,UNSEEN};
+	enum STATUS *status = new enum STATUS[Vers];
+	int *cap= new int[Vers];
+	for(int i=0;i<Vers;i++)             //1
+	{
+		status[i]=UNSEEN;
+		dad[i]=-1;
+		cap[i]=0;
+	}
+	status[s]=INTREE;                   //2
+	cout<<"INITIALIZED!"<<endl;
+	p=verList[s].head;
+	while(p!=NULL)    //3
+	{
+		status[p->end]=FRINGE;
+		cap[p->end]=p->weight;
+		dad[p->end]=s;
+		p=p->next;
+	}
+	
+	while(status[t]!=INTREE)            //4
+	{
+		int v = 0;
+		int value = 0;
+		for(int i = 0;i<Vers;i++)
+		{
+			if(value<cap[i]) {v=i;value=cap[i];}  //pick a finger with largest capacity  
+		}
+		if(value==0){dad[t]=-1;return dad;}      //no such path
+		status[v]=INTREE;
+		p=verList[v].head;
+		while(p!=NULL)    
+		{
+			int w = p->end;
+			if(status[w]==UNSEEN)
+			{
+				status[w]=FRINGE;
+				dad[w]=v;
+				cap[w]=min(cap[v],p->weight);
+			}
+			else if(status[w]==FRINGE && cap[w]<p->weight)
+			{
+				dad[w]=v;
+				cap[w]=min(cap[v],p->weight);
+			}
+			p=p->next;
+		}
+		cap[v]=0;
+
+	}
+
+	return dad;
+}
+
 
 void Graph::empty()
 {

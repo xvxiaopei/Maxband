@@ -13,20 +13,29 @@ void create2(Graph * graph);
 
 int main(){
 	cout<<"hello"<<endl;
-	Graph x(30);
-	x.insert(3,5);
-	x.insert(3,7);
-	x.insert(7,12);
-	x.insert(12,3);
-	x.printVertex(7);
-	x.remove(12,7);
-	x.printVertex(7);
-	x.insert(12,3);
-	x.printVertex(12);
-	x.empty();
-	x.printVertex(12);
-	cout<<endl<<x.edgewidth(3,12);
+	Graph x(8);
+	x.insert(0,1,3);
+	x.insert(0,5,9);
+	x.insert(1,4,8);
+	x.insert(1,2,17);
+	x.insert(2,4,2);
+	x.insert(2,3,5);
+	x.insert(3,6,1);
+	x.insert(6,4,11);
+	x.insert(6,5,6);
+	x.insert(5,4,4);
+	x.insert(4,7,2);
+	x.printVertex(4);
+	x.printMaxWidthPath(0,7,x.Dij(0,7));
 	cout<<"??"<<endl;
+	cout<<"??"<<endl;
+	/*
+	Graph *g1=new Graph(VER);
+	create1(g1);
+	cout<<"G1 has been created."<<endl;
+	g1->printMaxWidthPath(200,3333,g1->Dij(200,3333));
+	*/
+	/*
 	Heap<verNode> m(30,true);
 	verNode a,b,c,d;
 	a.degree=20;
@@ -43,7 +52,8 @@ int main(){
 	m.insert(d,d.degree);
 	m.Delete(0);
 	cout<<m.MaxMin().ver<<"  :"<<m.MaxMin().degree<<endl;
-
+	*/
+	//cout<<x.Dij(3,5)[3];
 	/*
 	Graph *g1=new Graph(VER);
 	Graph *g2=new Graph(VER);
