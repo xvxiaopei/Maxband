@@ -38,9 +38,10 @@ struct  edgeNode{
         int end;
         int weight;
         edgeNode *next;
+		int ver;
 
         edgeNode(int b,int e,int w,edgeNode *n=NULL)
-        {begin=b;end=e;weight=w;next=n;}
+        {begin=b;end=e;weight=w;next=n;ver=begin;}
 
     };
 

@@ -26,17 +26,19 @@ int main(){
 	x.insert(5,4,4);
 	x.insert(4,7,2);
 	x.printVertex(4);
-	x.printMaxWidthPath(0,7,x.Dij(0,7));
+	x.printMaxWidthPath(1,6,x.Dij(1,6));
+	x.printMaxWidthPath(1,6,x.DijHeap(1,6));
+	
 	cout<<"??"<<endl;
 	cout<<"??"<<endl;
-	/*
+	
 	Graph *g1=new Graph(VER);
 	create1(g1);
 	cout<<"G1 has been created."<<endl;
 	g1->printMaxWidthPath(200,3333,g1->Dij(200,3333));
-	*/
-	/*
-	Heap<verNode> m(30,true);
+	g1->printMaxWidthPath(200,3333,g1->DijHeap(200,3333));
+	
+	Heap<verNode> m(30,false);
 	verNode a,b,c,d;
 	a.degree=20;
 	a.ver=1;
@@ -50,9 +52,10 @@ int main(){
 	m.insert(b,b.degree);
 	m.insert(c,c.degree);
 	m.insert(d,d.degree);
-	m.Delete(0);
-	cout<<m.MaxMin().ver<<"  :"<<m.MaxMin().degree<<endl;
-	*/
+	//m.Delete(0);
+	m.DeletebyName(2);
+	cout<<m.MaxMin().name.ver<<"  :"<<m.MaxMin().name.degree<<endl;
+	m.printHeap();
 	//cout<<x.Dij(3,5)[3];
 	/*
 	Graph *g1=new Graph(VER);
