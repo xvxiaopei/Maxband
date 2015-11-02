@@ -28,16 +28,24 @@ int main(){
 	x.printVertex(4);
 	x.printMaxWidthPath(1,6,x.Dij(1,6));
 	x.printMaxWidthPath(1,6,x.DijHeap(1,6));
-	
+	x.printMaxWidthPath(1,6,x.Kru(1,6));
 	cout<<"??"<<endl;
 	cout<<"??"<<endl;
 	
 	Graph *g1=new Graph(VER);
 	create1(g1);
 	cout<<"G1 has been created."<<endl;
-	g1->printMaxWidthPath(200,3333,g1->Dij(200,3333));
-	g1->printMaxWidthPath(200,3333,g1->DijHeap(200,3333));
-	
+	while(true){
+	delete g1;
+	g1=new Graph(VER);
+	create1(g1);
+	cout<<"G1 has been created."<<endl;
+	int a=g1->printMaxWidthPath(200,3333,g1->Dij(200,3333));
+	int b=g1->printMaxWidthPath(200,3333,g1->DijHeap(200,3333));
+	int c=g1->printMaxWidthPath(200,3333,g1->Kru(200,3333));
+	if(a!=c||b!=c) for(;;);
+	}
+	/*
 	Heap<verNode> m(30,false);
 	verNode a,b,c,d;
 	a.degree=20;
@@ -56,6 +64,8 @@ int main(){
 	m.DeletebyName(2);
 	cout<<m.MaxMin().name.ver<<"  :"<<m.MaxMin().name.degree<<endl;
 	m.printHeap();
+
+	*/
 	//cout<<x.Dij(3,5)[3];
 	/*
 	Graph *g1=new Graph(VER);
@@ -100,23 +110,23 @@ void create1(Graph *graph)
 				while(graph->Vdegree(random)>=6 || i==random)
 				{
 					random++;
+					random=random%VER;
 					count++;
-					if(count>VER) 
+					if(count>VER*3) 
 					{
-						cout<<"reshuffle!!"<<endl;
 						//for(;;);
 						break;
 					}
 				}
-				if(count>VER) break;
+				if(count>VER*3) break;
 				randomValue = rand()%MAX+1;
 				graph->insert(i,random,randomValue);
 				//cout<<"select "<<random<<endl;
 		}
-		if(count>VER) break;
+		if(count>VER*3) break;
 		//graph->printVertex(i);
 	}
-	if(count>VER){
+	if(count>VER*3){
 		cout<<"reshuffle!!"<<endl;
 		graph->empty();
 		create1(graph);

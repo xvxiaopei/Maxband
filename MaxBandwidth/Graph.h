@@ -12,6 +12,7 @@
 #include "NodeStructure.h"
 #include "Heap.h"
 #include "NodeStructure.h"
+#include "setOp.h"
 
 using namespace std;
 
@@ -29,7 +30,9 @@ public:
 	int Vdegree(int u);
 	int* Dij(int s,int t);   //algorithm 1.1
 	int* DijHeap(int s,int t);  //algorithm 1.2
-	void printMaxWidthPath(int s,int t,int *dad);
+	int* Kru(int s,int t);     //algorithm 2
+	int* BFS(int s,int t);     //using BFS to search a path(used in algo 2 to search the MST)
+	int  printMaxWidthPath(int s,int t,int *dad);  //return width
 	void empty();
     ~Graph();
 private:
@@ -37,7 +40,7 @@ private:
     int min(int x,int y);
     int Vers;
     int Edges;
-    
+    //edgeNode *edgeLinkList;   //keep this list for sorting(algo 2)
     verNode *verList;
 };
 

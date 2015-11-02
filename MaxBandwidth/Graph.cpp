@@ -1,6 +1,6 @@
 
 #include "Graph.h"
-
+#include <queue>
 
 Graph::Graph(int vSize)
 {
@@ -16,12 +16,12 @@ int Graph::min(int x,int y)
 {
 	return (x<y)?x:y;
 }
-void  Graph::printMaxWidthPath(int s,int t,int * dad)
+int  Graph::printMaxWidthPath(int s,int t,int * dad)
 {
 	
 	int ind=t;
 	int value;
-	if(dad[t]==-1){cout<<"No such path!"<<endl;return;}
+	if(dad[t]==-1){cout<<"No such path!"<<endl;return 0;}
 	value=edgewidth(t,dad[t]);
 	while(dad[ind]!=s)
 	{
@@ -33,6 +33,7 @@ void  Graph::printMaxWidthPath(int s,int t,int * dad)
 	ind=dad[ind];
 	cout<<ind<<endl;
 	cout<<"Width is "<<value<<endl;
+	return value;
 }
 
 int * Graph::DijHeap(int s,int t)  //algorithm 1.2
@@ -96,6 +97,96 @@ int * Graph::DijHeap(int s,int t)  //algorithm 1.2
 
 
 }
+
+int* Graph::Kru(int s,int t)
+{
+	int *dad = new int[Vers];
+	int *rank =new int[Vers];
+	Graph MST(Vers);
+	edgeNode *p;
+	setOp e(Vers);
+	Heap<edgeNode> cap(Edges*2,true);
+	for(int i=0;i<Vers;i++)                   //in fact every edge present twice
+	{
+		p=verList[i].head;
+		while(p!=NULL)
+		{
+			cap.insert(*p,p->weight);
+			p=p->next;
+		}
+	}  
+	/*
+	while (cap.size()>0)
+	{
+		cout<<"Edge: "<<cap.MaxMin().name.begin<<"--"<<cap.MaxMin().name.end<<" : "<<cap.MaxMin().value<<endl;
+		cap.Delete(0);
+	}*/
+	for(int i=0;i<Vers;i++)
+	{
+		e.MakeSet(i);
+	}
+	for(int i=0;i<Edges*2;i++)
+	{
+		int v=cap.MaxMin().name.begin;
+		int w=cap.MaxMin().name.end;
+		int value=cap.MaxMin().value;
+		cap.Delete(0);
+		if(e.Find(v)!=e.Find(w))
+		{
+			e.Union(e.Find(v),e.Find(w));
+			MST.insert(v,w);
+		}
+	}
+	
+	
+	return MST.BFS(s,t);
+}
+
+int * Graph::BFS(int s,int t) 
+{
+	int *dad= new int[Vers];
+	int *dist=new int[Vers];
+	int u,v;
+	edgeNode *p;
+	enum COLOR{White,Gray,Black};
+	enum COLOR *color=new enum COLOR[Vers];
+	for(int i=0;i<Vers;i++)
+	{
+		color[i]=White;
+		dist[i]=INT_MAX;
+		dad[i]=-1;
+	}
+	color[s]=Gray;
+	dist[s]=0;
+	queue<int> Q;
+	Q.push(s);
+	while(!Q.empty())
+	{
+		u=Q.front();Q.pop();
+		p=verList[u].head;
+		//cout<<"!!";
+		while(p!=NULL)
+		{
+			v=p->end;
+			if(color[v]==White)
+			{
+				color[v]=Gray;
+				dad[v]=u;
+				dist[v]=dist[u]+1;
+				Q.push(v);
+			}
+			
+			p=p->next;
+			
+		}
+		color[u]=Black;
+	}
+	return dad;
+
+
+}
+
+
 
 int * Graph::Dij(int s,int t)    
 {
