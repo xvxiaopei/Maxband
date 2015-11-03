@@ -135,8 +135,11 @@ int* Graph::Kru(int s,int t)
 		int r2=e.Find(w);
 		if(r1!=r2)
 		{
+			cout<<v<<"--"<<w<<": "<<value<<endl;
+			cout<<r1<<" U "<<r2<<endl;
 			e.Union(r1,r2);
-			MST.insert(v,w);
+			cout<<"After Uinion"<<e.Find(v)<<" U "<<e.Find(w)<<endl;
+			MST.insertD(v,w);
 		}
 	}
 	
@@ -290,7 +293,34 @@ bool Graph::insert(int u,int v,int w)
 	verList[u].degree++;verList[v].degree++;
     return true;
 }
+bool Graph::insertD(int u,int v,int w)
+{
+	verList[u].head = new edgeNode(u,v,w,verList[u].head);
+	verList[v].head = new edgeNode(v,u,w,verList[v].head);
+    ++Edges;
+	verList[u].degree++;verList[v].degree++;
+    return true;
+}
+void Graph::addPath(int s,int t,int max)
+{
+	int w;
+	int v;
+	int value;
+	for(int i =0;i<Vers-1;i++)
+	{
+		w=(s+i)%Vers;
+		v=(s+i+1)%Vers;
+		if(v==t) {i++;continue;}
+		value=rand()%max+1;
+		insert(w,v,value);
+		cout<<"Add edge "<<w<<"--"<<v<<" with weight "<<value<<endl;
+	}
+	insert(v,t,rand()%max+1);
+	cout<<"Add edge "<<v<<"--"<<t<<" with weight "<<value<<endl;
 
+
+
+}
 
 bool Graph::Removedirected(int u,int v)
 {   

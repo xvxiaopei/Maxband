@@ -10,13 +10,13 @@ setOp::setOp(int size)
 
 void setOp::MakeSet(int v)
 {
-	dad[v]=0;rank[v]=0;
+	dad[v]=-1;rank[v]=0;
 }
 
 int setOp::Find(int v)
 {
 	int w=v;
-	while (dad[w]!=0)
+	while (dad[w]!=-1)
 	{
 		w=dad[w];
 	}
@@ -26,7 +26,7 @@ int setOp::FindC(int v)
 {
 	int w=v;
 	stack<int> s;
-	while (dad[w]!=0)
+	while (dad[w]!=-1)
 	{
 		s.push(w);
 		w=dad[w];

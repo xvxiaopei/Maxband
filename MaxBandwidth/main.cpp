@@ -4,8 +4,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
-#define VER 5000
-#define MAX 5000
+
 using namespace std;
 
 void create1(Graph * graph);
@@ -20,31 +19,39 @@ int main(){
 	x.insert(1,2,17);
 	x.insert(2,4,2);
 	x.insert(2,3,5);
-	x.insert(3,6,1);
-	x.insert(6,4,11);
-	x.insert(6,5,6);
+	//x.insert(3,6,1);
+	//x.insert(6,4,11);
+	//x.insert(6,5,6);
 	x.insert(5,4,4);
 	x.insert(4,7,2);
+	x.insert(1,2,2);
+	x.insert(3,4,15);
+	x.insert(7,0,10);
+	x.insert(0,6,10);
+	//x.addPath(1,6,20);
 	x.printVertex(4);
+	x.printMaxWidthPath(1,6,x.Kru(1,6));
 	x.printMaxWidthPath(1,6,x.Dij(1,6));
 	x.printMaxWidthPath(1,6,x.DijHeap(1,6));
-	x.printMaxWidthPath(1,6,x.Kru(1,6));
+	
 	cout<<"??"<<endl;
 	cout<<"??"<<endl;
 	
-	Graph *g1=new Graph(VER);
-	create1(g1);
-	cout<<"G1 has been created."<<endl;
+	/*Graph *g1;
 	while(true){
-	delete g1;
+	
 	g1=new Graph(VER);
-	create1(g1);
+	create2(g1);
 	cout<<"G1 has been created."<<endl;
 	int a=g1->printMaxWidthPath(200,3333,g1->Dij(200,3333));
 	int b=g1->printMaxWidthPath(200,3333,g1->DijHeap(200,3333));
 	int c=g1->printMaxWidthPath(200,3333,g1->Kru(200,3333));
-	if(a!=c||b!=c) for(;;);
-	}
+	a=g1->printMaxWidthPath(213,2787,g1->Dij(213,2787));
+	b=g1->printMaxWidthPath(213,2787,g1->DijHeap(213,2787));
+	c=g1->printMaxWidthPath(213,2787,g1->Kru(213,3333));
+	//if(a!=c||b!=c) {cout<<"!!";for(;;);}
+	delete g1;
+	}*/
 	/*
 	Heap<verNode> m(30,false);
 	verNode a,b,c,d;
