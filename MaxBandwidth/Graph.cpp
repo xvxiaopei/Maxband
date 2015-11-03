@@ -99,8 +99,6 @@ int * Graph::DijHeap(int s,int t)  //algorithm 1.2
 }
 Graph* Graph::MST()
 {
-	int *dad = new int[Vers];
-	int *rank =new int[Vers];
 	Graph *MST=new Graph(Vers);
 	edgeNode *p;
 	setOp e(Vers);
@@ -146,7 +144,6 @@ Graph* Graph::MST()
 
 int* Graph::Kru(int s,int t)
 {
-	
 	return MST()->BFS(s,t);
 }
 

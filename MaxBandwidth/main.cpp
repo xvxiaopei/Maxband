@@ -27,16 +27,33 @@ int main(){
 	end = clock();
 	dur = (double)(end - start);
 	cout<<"Dij: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+
 	start = clock();
 	int b=g1->printMaxWidthPath(200,3333,g1->DijHeap(200,3333));
 	end = clock();
 	dur = (double)(end - start);
 	cout<<"DijHeap: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+
 	start = clock();
 	int c=g1->printMaxWidthPath(200,3333,g1->Kru(200,3333));
 	end = clock();
 	dur = (double)(end - start);
 	cout<<"Kru: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+
+	start = clock();
+	Graph* p=g1->MST();
+	end = clock();
+	dur = (double)(end - start);
+	cout<<"MST: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+
+	start = clock();
+	p->BFS(200,3333);
+	end = clock();
+	dur = (double)(end - start);
+	cout<<"BFS: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+
+
+
 
 	/*
 	a=g1->printMaxWidthPath(213,2787,g1->Dij(213,2787));
