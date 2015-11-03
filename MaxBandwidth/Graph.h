@@ -36,6 +36,7 @@ public:
 	int* Dij(int s,int t);   //algorithm 1.1
 	int* DijHeap(int s,int t);  //algorithm 1.2
 	int* Kru(int s,int t);     //algorithm 2
+	Graph* MST();              //return MST
 	int* BFS(int s,int t);     //using BFS to search a path(used in algo 2 to search the MST)
 	int  printMaxWidthPath(int s,int t,int *dad);  //return width
 	void empty();

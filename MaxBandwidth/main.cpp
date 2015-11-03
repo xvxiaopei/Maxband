@@ -11,7 +11,45 @@ void create1(Graph * graph);
 void create2(Graph * graph);
 
 int main(){
+	
 	cout<<"hello"<<endl;
+	double dur;
+    clock_t start,end;
+    start = clock();
+    Graph *g1=new Graph(VER);//dosomething
+	create1(g1);
+	end = clock();
+    dur = (double)(end - start);
+	cout<<"G1 has been created: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+
+	start = clock();
+	int a=g1->printMaxWidthPath(200,3333,g1->Dij(200,3333));
+	end = clock();
+	dur = (double)(end - start);
+	cout<<"Dij: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+	start = clock();
+	int b=g1->printMaxWidthPath(200,3333,g1->DijHeap(200,3333));
+	end = clock();
+	dur = (double)(end - start);
+	cout<<"DijHeap: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+	start = clock();
+	int c=g1->printMaxWidthPath(200,3333,g1->Kru(200,3333));
+	end = clock();
+	dur = (double)(end - start);
+	cout<<"Kru: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+
+	/*
+	a=g1->printMaxWidthPath(213,2787,g1->Dij(213,2787));
+	b=g1->printMaxWidthPath(213,2787,g1->DijHeap(213,2787));
+	c=g1->printMaxWidthPath(213,2787,g1->Kru(213,3333));
+	*/
+
+
+
+
+
+
+	/*
 	Graph x(8);
 	x.insert(0,1,3);
 	x.insert(0,5,9);
@@ -33,25 +71,10 @@ int main(){
 	x.printMaxWidthPath(1,6,x.Kru(1,6));
 	x.printMaxWidthPath(1,6,x.Dij(1,6));
 	x.printMaxWidthPath(1,6,x.DijHeap(1,6));
+	*/
 	
-	cout<<"??"<<endl;
-	cout<<"??"<<endl;
 	
-	/*Graph *g1;
-	while(true){
 	
-	g1=new Graph(VER);
-	create2(g1);
-	cout<<"G1 has been created."<<endl;
-	int a=g1->printMaxWidthPath(200,3333,g1->Dij(200,3333));
-	int b=g1->printMaxWidthPath(200,3333,g1->DijHeap(200,3333));
-	int c=g1->printMaxWidthPath(200,3333,g1->Kru(200,3333));
-	a=g1->printMaxWidthPath(213,2787,g1->Dij(213,2787));
-	b=g1->printMaxWidthPath(213,2787,g1->DijHeap(213,2787));
-	c=g1->printMaxWidthPath(213,2787,g1->Kru(213,3333));
-	//if(a!=c||b!=c) {cout<<"!!";for(;;);}
-	delete g1;
-	}*/
 	/*
 	Heap<verNode> m(30,false);
 	verNode a,b,c,d;
@@ -96,6 +119,8 @@ int main(){
 	}
 	cout<<"??"<<endl;
 	*/
+	cout<<"??"<<endl;
+	cout<<"??"<<endl;
 	cout<<"??"<<endl;
 
 }
