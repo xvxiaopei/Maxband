@@ -97,12 +97,11 @@ int * Graph::DijHeap(int s,int t)  //algorithm 1.2
 
 
 }
-
-int* Graph::Kru(int s,int t)
+Graph* Graph::MST()
 {
 	int *dad = new int[Vers];
 	int *rank =new int[Vers];
-	Graph MST(Vers);
+	Graph *MST=new Graph(Vers);
 	edgeNode *p;
 	setOp e(Vers);
 	Heap<edgeNode> cap(Edges*2,true);
@@ -135,16 +134,20 @@ int* Graph::Kru(int s,int t)
 		int r2=e.Find(w);
 		if(r1!=r2)
 		{
-			cout<<v<<"--"<<w<<": "<<value<<endl;
-			cout<<r1<<" U "<<r2<<endl;
+			//cout<<v<<"--"<<w<<": "<<value<<endl;
+			//cout<<r1<<" U "<<r2<<endl;
 			e.Union(r1,r2);
-			cout<<"After Uinion"<<e.Find(v)<<" U "<<e.Find(w)<<endl;
-			MST.insertD(v,w);
+			//cout<<"After Uinion"<<e.Find(v)<<" U "<<e.Find(w)<<endl;
+			MST->insertD(v,w);
 		}
 	}
+	return MST;
+}
+
+int* Graph::Kru(int s,int t)
+{
 	
-	
-	return MST.BFS(s,t);
+	return MST()->BFS(s,t);
 }
 
 int * Graph::BFS(int s,int t) 
