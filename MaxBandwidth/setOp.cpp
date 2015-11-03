@@ -1,4 +1,5 @@
 #include "setOp.h"
+#include <stack>
 
 setOp::setOp(int size)
 {
@@ -15,13 +16,30 @@ void setOp::MakeSet(int v)
 int setOp::Find(int v)
 {
 	int w=v;
-	if(w>=Size){cout<<"w = "<<w;}
 	while (dad[w]!=0)
 	{
 		w=dad[w];
 	}
 	return w;
 }
+int setOp::FindC(int v)
+{
+	int w=v;
+	stack<int> s;
+	while (dad[w]!=0)
+	{
+		s.push(w);
+		w=dad[w];
+	}
+	while(!s.empty())
+	{
+		dad[s.top()]=w;
+		s.pop();
+	}
+
+	return w;
+}
+
 
 void setOp::Union(int w,int v)
 {

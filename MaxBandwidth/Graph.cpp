@@ -131,9 +131,11 @@ int* Graph::Kru(int s,int t)
 		int w=cap.MaxMin().name.end;
 		int value=cap.MaxMin().value;
 		cap.Delete(0);
-		if(e.Find(v)!=e.Find(w))
+		int r1=e.Find(v);
+		int r2=e.Find(w);
+		if(r1!=r2)
 		{
-			e.Union(e.Find(v),e.Find(w));
+			e.Union(r1,r2);
 			MST.insert(v,w);
 		}
 	}

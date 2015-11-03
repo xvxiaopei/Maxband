@@ -17,6 +17,7 @@ private:
 public:
 	setOp(int size);
 	int Find(int v);
+	int FindC(int v);    //Find with compression
 	void Union(int w,int v);
 	void MakeSet(int v);
 	int *Dad();
