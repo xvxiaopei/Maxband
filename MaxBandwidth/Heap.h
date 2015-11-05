@@ -15,10 +15,7 @@ template <class TypeOfNode>
 class Heap{
 private:
 	bool M;       //M: true for Maxium Heap, false for Minnum Heap
-	
-
-	HeapNode<TypeOfNode> * HeapArr;
-	
+	HeapNode<TypeOfNode> * HeapArr;   
 	int index;
 	int Size;
 	bool heapfy(int num);

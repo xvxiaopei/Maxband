@@ -38,6 +38,10 @@ int  Graph::printMaxWidthPath(int s,int t,int * dad)
 
 int * Graph::DijHeap(int s,int t)  //algorithm 1.2
 {
+	clock_t start,end;
+	double dur=0; 
+	
+
 	int *dad  = new int[Vers];
 	edgeNode *p;
 	enum STATUS{INTREE,FRINGE,UNSEEN};
@@ -53,7 +57,10 @@ int * Graph::DijHeap(int s,int t)  //algorithm 1.2
 	while(p!=NULL)    //3
 	{
 		status[p->end]=FRINGE;
+		start = clock();
 		cap.insert(verList[p->end],p->weight);
+		end = clock();
+		dur += (double)(end - start);
 		dad[p->end]=s;
 		p=p->next;
 	}
@@ -61,6 +68,8 @@ int * Graph::DijHeap(int s,int t)  //algorithm 1.2
 	{
 		int v = 0;
 		int value = 0;
+
+		start = clock();
 		if(cap.size()<1){dad[t]=-1;return dad;}      //no such path
 		v=cap.MaxMin().name.ver;
 		value=cap.MaxMin().value;
@@ -68,7 +77,9 @@ int * Graph::DijHeap(int s,int t)  //algorithm 1.2
 		cap.Delete(0);
 		//cap.printHeap();
 		 //pick a finger with largest capacity  
-		
+		end = clock();
+		dur += (double)(end - start);
+
 		status[v]=INTREE;
 		p=verList[v].head;
 		while(p!=NULL)    
@@ -78,31 +89,42 @@ int * Graph::DijHeap(int s,int t)  //algorithm 1.2
 			{
 				status[w]=FRINGE;
 				dad[w]=v;
+				start = clock();
 				cap.insert(verList[w],min(value,p->weight));
+				end = clock();
+				dur += (double)(end - start);
 				//cap[w]=min(cap[v],p->weight);
 			}
 			else if(status[w]==FRINGE && cap.Value(cap.pos[w])<p->weight)
 			{
 				dad[w]=v;
+				start = clock();
 				cap.DeletebyName(w);              //I maintain a pos[] in Heap, so this step takes O(1)
 				cap.insert(verList[w],min(value,p->weight));
+				end = clock();
+				dur += (double)(end - start);
 				//cap[w]=min(cap[v],p->weight);
 			}
 			p=p->next;
 		}
 
 	}
-
+	cout<<"Heap operation in dijheap takes "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
 	return dad;
 
 
 }
 Graph* Graph::MST()
 {
+	clock_t start,end;
+	double dur=0; 
+	
 	Graph *MST=new Graph(Vers);
 	edgeNode *p;
 	setOp e(Vers);
 	Heap<edgeNode> cap(Edges*2,true);
+	start = clock();
+
 	for(int i=0;i<Vers;i++)                   //in fact every edge present twice
 	{
 		p=verList[i].head;
@@ -112,6 +134,9 @@ Graph* Graph::MST()
 			p=p->next;
 		}
 	}  
+
+	end = clock();
+	dur += (double)(end - start);
 	/*
 	while (cap.size()>0)
 	{
@@ -124,10 +149,14 @@ Graph* Graph::MST()
 	}
 	for(int i=0;i<Edges*2;i++)
 	{
+		start = clock();
 		int v=cap.MaxMin().name.begin;
 		int w=cap.MaxMin().name.end;
 		int value=cap.MaxMin().value;
 		cap.Delete(0);
+		end = clock();
+		dur += (double)(end - start);
+
 		int r1=e.Find(v);
 		int r2=e.Find(w);
 		if(r1!=r2)
@@ -139,6 +168,8 @@ Graph* Graph::MST()
 			MST->insertD(v,w);
 		}
 	}
+
+	cout<<"Heap sort in MST takes "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
 	return MST;
 }
 
@@ -195,6 +226,9 @@ int * Graph::BFS(int s,int t)
 
 int * Graph::Dij(int s,int t)    
 {
+	clock_t start,end;
+	double dur=0; 
+	
 	int *dad  = new int[Vers];
 	edgeNode *p;
 	enum STATUS{INTREE,FRINGE,UNSEEN};
@@ -211,7 +245,12 @@ int * Graph::Dij(int s,int t)
 	while(p!=NULL)    //3
 	{
 		status[p->end]=FRINGE;
+
+		start = clock();
 		cap[p->end]=p->weight;
+		end = clock();
+		dur += (double)(end - start);
+
 		dad[p->end]=s;
 		p=p->next;
 	}
@@ -220,10 +259,15 @@ int * Graph::Dij(int s,int t)
 	{
 		int v = 0;
 		int value = 0;
+		
+		start = clock();
 		for(int i = 0;i<Vers;i++)
 		{
 			if(value<cap[i]) {v=i;value=cap[i];}  //pick a finger with largest capacity  
 		}
+		end = clock();
+		dur += (double)(end - start);
+
 		if(value==0){dad[t]=-1;return dad;}      //no such path
 		status[v]=INTREE;
 		p=verList[v].head;
@@ -236,19 +280,27 @@ int * Graph::Dij(int s,int t)
 			{
 				status[w]=FRINGE;
 				dad[w]=v;
+
+				start = clock();
 				cap[w]=min(cap[v],p->weight);
+				end = clock();
+				dur += (double)(end - start);
 			}
 			else if(status[w]==FRINGE && cap[w]<p->weight)
 			{
 				dad[w]=v;
+
+				start = clock();
 				cap[w]=min(cap[v],p->weight);
+				end = clock();
+				dur += (double)(end - start);
 			}
 			p=p->next;
 		}
 		cap[v]=0;
 
 	}
-
+	cout<<"Cap chosen in dij takes "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
 	return dad;
 }
 
@@ -313,10 +365,10 @@ void Graph::addPath(int s,int t,int max)
 		if(v==t) {i++;continue;}
 		value=rand()%max+1;
 		insert(w,v,value);
-		cout<<"Add edge "<<w<<"--"<<v<<" with weight "<<value<<endl;
+		//cout<<"Add edge "<<w<<"--"<<v<<" with weight "<<value<<endl;
 	}
 	insert(v,t,rand()%max+1);
-	cout<<"Add edge "<<v<<"--"<<t<<" with weight "<<value<<endl;
+	//cout<<"Add edge "<<v<<"--"<<t<<" with weight "<<value<<endl;
 
 
 

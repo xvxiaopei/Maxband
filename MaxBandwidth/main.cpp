@@ -15,13 +15,49 @@ int main(){
 	cout<<"hello"<<endl;
 	double dur;
     clock_t start,end;
+
     start = clock();
-    Graph *g1=new Graph(VER);//dosomething
-	create1(g1);
+    Graph *g1=new Graph(VER);   //
+	create2(g1);
 	end = clock();
     dur = (double)(end - start);
-	cout<<"G1 has been created: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+	cout<<"G2 has been created: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+	start = clock();
+	Graph* p=g1->MST();
+	end = clock();
+	dur = (double)(end - start);
+	cout<<"MST: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+	for(int i=0;i<5;i++)
+	{
+		int u=rand()%VER;
+		int v=rand()%VER;
+		while(u==v) v=rand()%VER;
+		cout<<"----------------THE "<<i+1<<" PAIR OF VERTICES ("<<u<<" , "<<v<<")--------------------------"<<endl;
+		g1->addPath(u,v);
+		
+		start = clock();
+		g1->Dij(u,v);
+		end = clock();
+		dur = (double)(end - start);
+		cout<<"Dij: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
 
+		start = clock();
+		g1->DijHeap(u,v);
+		end = clock();
+		dur = (double)(end - start);
+		cout<<"DijHeap: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+
+		start = clock();
+		p->BFS(u,v);
+		end = clock();
+		dur = (double)(end - start);
+		cout<<"BFS: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+		cout<<"----------------------------------------------------------------------------"<<endl;
+
+	}
+
+	/*
+	g1->addPath(200,3333);
 	start = clock();
 	int a=g1->printMaxWidthPath(200,3333,g1->Dij(200,3333));
 	end = clock();
@@ -51,9 +87,9 @@ int main(){
 	end = clock();
 	dur = (double)(end - start);
 	cout<<"BFS: "<<dur*1000/CLOCKS_PER_SEC<<" ms"<<endl;
+	*/
 
-
-
+	
 
 	/*
 	a=g1->printMaxWidthPath(213,2787,g1->Dij(213,2787));
@@ -196,7 +232,7 @@ void create2(Graph *graph)
 		for(int j=graph->Vdegree(i); j<VER*0.2; j++)
 		{
 			random = (rand() % (VER-i))+ i;
-			if(graph->edges()%10000==0) cout<<graph->edges()<<" edges has been inserted." <<endl;
+			//if(graph->edges()%10000==0) cout<<graph->edges()<<" edges has been inserted." <<endl;
 			if(graph->Vdegree(random) < VER*0.2)
 			{
 				graph->insert(i, random, rand()%MAX+1);
